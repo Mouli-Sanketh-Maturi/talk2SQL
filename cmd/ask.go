@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"talk2SQL/biz"
+	"talk2SQL/helper"
 )
 
 // askCmd represents the ask command
@@ -20,8 +21,17 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		biz.Execute("select FIRST_NAME, LAST_NAME from BLACKBOARD_DATA.CDM_CLB.PERSON LIMIT 2")
-		fmt.Println("ask called")
+		fmt.Println("Trying to generate SQL Query for the given prompt: " + cmd.Flag("q").Value.String())
+
+		SQLQuery, err := helper.QueryToSql(cmd.Flag("q").Value.String())
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("The SQL Query generated for the given prompt is: " + SQLQuery)
+		fmt.Println("Fetching results from database")
+		biz.Execute(SQLQuery)
 	},
 }
 

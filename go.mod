@@ -52,6 +52,7 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/sashabaranov/go-openai v1.17.7 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/snowflakedb/gosnowflake v1.6.25 // indirect
 	github.com/spf13/cobra v1.7.0 // indirect
