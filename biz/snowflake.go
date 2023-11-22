@@ -12,6 +12,14 @@ import (
 
 const configFile = "config/snowflake.json"
 
+const (
+	InfoColor    = "\033[1;34m%s\033[0m"
+	NoticeColor  = "\033[1;36m%s\033[0m"
+	WarningColor = "\033[1;33m%s\033[0m"
+	ErrorColor   = "\033[1;31m%s\033[0m"
+	DebugColor   = "\033[0;36m%s\033[0m"
+)
+
 func loadConfig(file string) (config.SnowflakeConfig, error) {
 	var config config.SnowflakeConfig
 
@@ -37,13 +45,15 @@ func Execute(query string) {
 	db, err := sql.Open("snowflake", connectionString)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf(ErrorColor, err)
+		return
 	}
 
 	rows, err := db.Query(query)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf(ErrorColor, err)
+		return
 	}
 
 	defer rows.Close()
@@ -51,7 +61,8 @@ func Execute(query string) {
 	columns, err := rows.Columns()
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf(ErrorColor, err)
+		return
 	}
 
 	t := table.NewWriter()
